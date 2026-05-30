@@ -1,0 +1,1166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Free Fire Tournament | Registration</title>
+  <meta name="description" content="Register teams for a Free Fire tournament. Dark black & gold esports design with WhatsApp submission, live slots, countdown, leaderboard and admin panel." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#060607;
+      --panel:#0c0c0f;
+      --panel2:#101015;
+      --text:#e9e9ef;
+      --muted:#a9a9b7;
+      --gold:#d4af37;
+      --gold2:#f3d16a;
+      --danger:#ff3b3b;
+      --ok:#22c55e;
+      --card-border:rgba(212,175,55,.28);
+      --card-glow:rgba(212,175,55,.18);
+      --shadow: 0 12px 40px rgba(0,0,0,.55);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 70% -10%, rgba(212,175,55,.18), transparent 60%),
+        radial-gradient(900px 500px at -10% 10%, rgba(243,209,106,.10), transparent 55%),
+        linear-gradient(180deg, #050506 0%, #07070a 40%, #050506 100%);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+
+    /* Subtle background grid */
+    .grid{
+      position:fixed; inset:0; pointer-events:none;
+      background-image:
+        linear-gradient(to right, rgba(212,175,55,.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(212,175,55,.06) 1px, transparent 1px);
+      background-size: 54px 54px;
+      opacity:.25;
+      mask-image: radial-gradient(circle at 50% 20%, rgba(0,0,0,1), rgba(0,0,0,0) 62%);
+    }
+
+    .wrap{max-width:1100px; margin:0 auto; padding:22px 16px 70px}
+
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:18px 18px; border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0));
+      border:1px solid rgba(212,175,55,.22);
+      box-shadow: var(--shadow);
+      position:sticky; top:12px; z-index:10;
+      backdrop-filter: blur(8px);
+    }
+
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width: 220px;
+    }
+    .logo{
+      width:44px; height:44px; border-radius:14px;
+      background: radial-gradient(circle at 30% 20%, rgba(243,209,106,.95), rgba(212,175,55,.25) 42%, rgba(0,0,0,.2) 70%),
+                  linear-gradient(135deg, rgba(212,175,55,.7), rgba(0,0,0,0));
+      border:1px solid rgba(212,175,55,.35);
+      box-shadow: 0 0 0 6px rgba(212,175,55,.06), 0 10px 35px rgba(212,175,55,.16);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:-30px;
+      background: conic-gradient(from 180deg, rgba(243,209,106,.0), rgba(243,209,106,.6), rgba(243,209,106,.0));
+      animation: spin 3.5s linear infinite;
+      opacity:.65;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .brand h1{
+      margin:0;
+      font-family: Rajdhani, Inter, system-ui;
+      font-size:18px;
+      letter-spacing:.6px;
+      line-height:1.1;
+    }
+    .brand .sub{color:var(--muted); font-size:12px; margin-top:4px}
+
+    nav{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+    }
+
+    .tab{
+      padding:10px 12px; border-radius:14px;
+      border:1px solid rgba(212,175,55,.2);
+      background: rgba(12,12,15,.5);
+      color:var(--muted);
+      font-weight:700;
+      font-size:13px;
+      transition:.2s ease;
+      user-select:none;
+      cursor:pointer;
+    }
+    .tab:hover{transform: translateY(-1px); border-color: rgba(212,175,55,.42); color:var(--text)}
+    .tab.active{background: rgba(212,175,55,.13); color: var(--text); box-shadow: 0 0 0 4px rgba(212,175,55,.06)}
+
+    .hero{
+      margin-top:16px;
+      display:grid; grid-template-columns: 1.4fr .9fr; gap:14px;
+    }
+    @media (max-width: 860px){ .hero{grid-template-columns: 1fr} header{position:relative} }
+
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid rgba(212,175,55,.22);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .panel .head{
+      padding:16px 18px; display:flex; align-items:flex-start; justify-content:space-between;
+      gap:12px;
+    }
+
+    .kicker{
+      font-family: Rajdhani, Inter, system-ui;
+      letter-spacing:.8px;
+      color: var(--gold2);
+      font-weight:700;
+      font-size:12px;
+    }
+
+    .title{
+      margin:8px 0 0;
+      font-family: Rajdhani, Inter, system-ui;
+      letter-spacing:1px;
+      font-size:28px;
+      line-height:1.05;
+    }
+
+    .meta{
+      margin-top:10px; color:var(--muted); font-size:13px; line-height:1.45
+    }
+
+    .badges{
+      display:flex; flex-wrap:wrap; gap:10px; padding:0 18px 18px;
+    }
+
+    .badge{
+      flex: 1 1 160px;
+      background: rgba(12,12,15,.55);
+      border:1px solid rgba(212,175,55,.2);
+      border-radius: 16px;
+      padding:12px 12px;
+      min-width: 160px;
+    }
+
+    .badge .label{color:var(--muted); font-size:12px; font-weight:700}
+    .badge .value{
+      margin-top:6px;
+      font-family: Rajdhani, Inter, system-ui;
+      font-size:20px;
+      letter-spacing:.3px;
+    }
+
+    .badge .mini{margin-top:4px; color: rgba(212,175,55,.9); font-weight:700; font-size:12px}
+
+    .section{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 980px){ .section{grid-template-columns: 1fr} }
+
+    .content{padding:18px}
+
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 520px){ .grid2{grid-template-columns:1fr} }
+
+    .field{display:flex; flex-direction:column; gap:7px; margin-bottom:12px}
+
+    label{
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 12.5px;
+      letter-spacing: .2px;
+    }
+
+    input, textarea, select{
+      width:100%;
+      padding:12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,.22);
+      background: rgba(10,10,13,.55);
+      color: var(--text);
+      outline: none;
+      transition: .15s ease;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.2);
+    }
+    input:focus, textarea:focus, select:focus{
+      border-color: rgba(212,175,55,.55);
+      box-shadow: 0 0 0 4px rgba(212,175,55,.12);
+    }
+    textarea{resize: vertical; min-height: 70px}
+
+    .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+
+    .btn{
+      padding:12px 14px;
+      border-radius: 14px;
+      border:1px solid rgba(212,175,55,.32);
+      background: linear-gradient(180deg, rgba(212,175,55,.18), rgba(212,175,55,.06));
+      color:var(--text);
+      font-weight: 800;
+      cursor:pointer;
+      transition: .2s ease;
+      user-select:none;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      justify-content:center;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(212,175,55,.6)}
+    .btn:active{transform: translateY(0)}
+
+    .btn.secondary{
+      background: rgba(12,12,15,.5);
+      border-color: rgba(212,175,55,.22);
+      color: var(--muted);
+    }
+
+    .btn.danger{
+      background: rgba(255,59,59,.12);
+      border-color: rgba(255,59,59,.35);
+    }
+
+    .hint{color:var(--muted); font-size:12.5px; line-height:1.4}
+
+    .table{
+      width:100%;
+      border-collapse: collapse;
+      overflow:hidden;
+      border-radius: 16px;
+      border:1px solid rgba(212,175,55,.18);
+      background: rgba(10,10,13,.35);
+    }
+    .table th, .table td{padding:12px 12px; text-align:left; border-bottom:1px solid rgba(212,175,55,.12)}
+    .table th{
+      color: var(--gold2);
+      font-size:12.5px;
+      letter-spacing:.5px;
+      text-transform: uppercase;
+    }
+    .table td{color: rgba(233,233,239,.95); font-weight:650; font-size:13.5px}
+    .table tr:last-child td{border-bottom:none}
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius: 999px;
+      border:1px solid rgba(212,175,55,.22);
+      background: rgba(12,12,15,.55);
+      color: var(--muted);
+      font-weight:800;
+      font-size:12.5px;
+      white-space:nowrap;
+    }
+
+    .status-dot{width:10px; height:10px; border-radius:50%; background: var(--gold2); box-shadow: 0 0 0 6px rgba(212,175,55,.08)}
+    .status-dot.off{background: rgba(255,255,255,.2); box-shadow:none}
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: rgba(10,10,13,.9);
+      border:1px solid rgba(212,175,55,.35);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      display:none;
+      z-index:1000;
+      max-width: calc(100vw - 24px);
+    }
+
+    .toast.show{display:block; animation: pop .2s ease}
+    @keyframes pop{from{opacity:0; transform: translateX(-50%) translateY(6px)} to{opacity:1; transform: translateX(-50%) translateY(0)}}
+
+    .footer{
+      margin-top:20px;
+      color: var(--muted);
+      font-size: 12.5px;
+      text-align:center;
+    }
+
+    /* Admin */
+    .adminWrap{display:none}
+    .adminWrap.show{display:block}
+
+    .subhead{
+      margin:0 0 12px;
+      font-family: Rajdhani, Inter, system-ui;
+      letter-spacing: .7px;
+      color: var(--gold2);
+      font-size: 18px;
+    }
+
+    .split{
+      display:grid; grid-template-columns: 1fr 1fr; gap:14px;
+    }
+    @media (max-width: 980px){ .split{grid-template-columns: 1fr} }
+
+    .smallNote{
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height:1.4;
+    }
+
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+
+  </style>
+</head>
+<body>
+  <div class="grid"></div>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>BLACK•GOLD ESPORTS</h1>
+          <div class="sub" id="siteSubtitle">Free Fire Tournament Registration</div>
+        </div>
+      </div>
+
+      <nav aria-label="Sections">
+        <div class="tab active" data-tab="register">Register</div>
+        <div class="tab" data-tab="leaderboard">Leaderboard</div>
+        <div class="tab" data-tab="admin">Admin</div>
+      </nav>
+    </header>
+
+    <div class="hero">
+      <section class="panel" aria-label="Tournament Overview">
+        <div class="head">
+          <div>
+            <div class="kicker">TOURNAMENT INFO</div>
+            <h2 class="title" id="tournamentName">Free Fire BlackGold Cup</h2>
+            <div class="meta" id="tournamentSubtitle">Battle rules & details will appear here.</div>
+          </div>
+          <div class="pill" id="regStatusPill"><span class="status-dot" id="statusDot"></span><span id="regStatusText">Registration Open</span></div>
+        </div>
+        <div class="badges">
+          <div class="badge">
+            <div class="label">Countdown</div>
+            <div class="value mono" id="countdown">--:--:--</div>
+            <div class="mini" id="countdownHint">Starts soon</div>
+          </div>
+          <div class="badge">
+            <div class="label">Live Slots</div>
+            <div class="value mono" id="slotsLive">0 / 0</div>
+            <div class="mini" id="slotsHint">Teams registered</div>
+          </div>
+          <div class="badge">
+            <div class="label">Prize Pool</div>
+            <div class="value" id="prizePool">₹0</div>
+            <div class="mini" id="entryFeeMini">Entry fee ₹0</div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <div class="content">
+          <div class="kicker">QUICK ACTIONS</div>
+          <h3 class="subhead">WhatsApp Registration</h3>
+          <p class="smallNote">Fill the form and tap <b>Submit on WhatsApp</b>. Your message will open in WhatsApp with a pre-filled registration text.</p>
+
+          <div class="row" style="margin-top:12px;">
+            <div class="pill"><span class="status-dot off" aria-hidden="true"></span><span>Mobile ready</span></div>
+            <div class="pill"><span class="status-dot" aria-hidden="true" style="background:rgba(34,197,94,1); box-shadow: 0 0 0 6px rgba(34,197,94,.12)"></span><span>Fast & simple</span></div>
+          </div>
+
+          <div style="margin-top:14px;">
+            <div class="hint" id="adminNote">Admin can update tournament details, slots, prize pool, and registration status.</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="section">
+      <section class="panel" id="tab-register">
+        <div class="content">
+          <div class="kicker">REGISTRATION</div>
+          <h3 class="subhead">Team Registration Form</h3>
+          <div class="grid2">
+            <div class="field">
+              <label>Team Name</label>
+              <input id="teamName" type="text" placeholder="e.g., BlackGold Raptors" maxlength="40" />
+            </div>
+            <div class="field">
+              <label>Captain Name</label>
+              <input id="captainName" type="text" placeholder="e.g., Krish" maxlength="40" />
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div class="field">
+              <label>WhatsApp Number (with country code)</label>
+              <input id="whatsappNumber" type="tel" placeholder="e.g., 919876543210" inputmode="numeric" maxlength="18" />
+            </div>
+            <div class="field">
+              <label>Player UIDs (comma-separated)</label>
+              <input id="playerUids" type="text" placeholder="e.g., UID1,UID2,UID3,UID4" maxlength="200" />
+              <div class="hint">Use 4 or 5 UIDs separated by commas.</div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Entry Confirmation</label>
+            <div class="row" style="justify-content:space-between;">
+              <div class="hint">Entry fee: <b id="entryFee">₹0</b></div>
+              <div class="pill" title="Registration status"><span class="status-dot" id="localStatusDot"></span><span id="localStatusText">--</span></div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:10px;">
+            <button class="btn" id="whatsappSubmitBtn" type="button">Submit on WhatsApp</button>
+            <button class="btn secondary" id="copyMessageBtn" type="button">Copy Registration Text</button>
+          </div>
+
+          <div class="field" style="margin-top:12px;">
+            <label>Generated WhatsApp Message</label>
+            <textarea id="messagePreview" readonly class="mono" style="min-height:110px;"></textarea>
+          </div>
+
+          <div class="hint" id="validationHint">All changes are instant. Admin updates are also used on refresh.</div>
+        </div>
+      </section>
+
+      <section class="panel" id="tab-leaderboard">
+        <div class="content">
+          <div class="row" style="justify-content:space-between;">
+            <div>
+              <div class="kicker">LEADERBOARD</div>
+              <h3 class="subhead">Points Ranking</h3>
+            </div>
+            <div class="pill" id="leaderboardMeta"><span class="status-dot"></span><span id="leaderboardMetaText">Top teams</span></div>
+          </div>
+
+          <table class="table" style="margin-top:12px;">
+            <thead>
+              <tr>
+                <th style="width:50px;">#</th>
+                <th>Team</th>
+                <th>Captain</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardTbody"></tbody>
+          </table>
+
+          <div class="hint" style="margin-top:12px;">Admin can update points and registration status from the Admin panel.</div>
+        </div>
+      </section>
+
+      <section class="panel adminWrap" id="tab-admin" aria-label="Admin Panel">
+        <div class="content">
+          <div class="kicker">ADMIN</div>
+          <h3 class="subhead">Tournament Control Center</h3>
+          <div class="hint">This is a local demo (no backend). All data persists using <b>localStorage</b>. In production, connect it to your backend/Firebase.</div>
+
+          <div class="split" style="margin-top:14px;">
+            <div>
+              <div class="field">
+                <label>Admin PIN (demo)</label>
+                <input id="adminPin" type="password" placeholder="Enter PIN" maxlength="10" />
+                <div class="hint">Default PIN: <b>1234</b></div>
+              </div>
+
+              <div class="row">
+                <button class="btn" id="adminLoginBtn" type="button">Unlock Admin</button>
+                <button class="btn danger" id="adminLogoutBtn" type="button" style="display:none">Lock</button>
+              </div>
+
+              <div class="field" style="margin-top:14px;">
+                <label>Registration Status</label>
+                <select id="regOpenSelect" disabled>
+                  <option value="open">Open</option>
+                  <option value="closed">Closed</option>
+                </select>
+              </div>
+
+              <div class="row" style="margin-top:12px;">
+                <button class="btn secondary" id="exportBtn" type="button" disabled>Export JSON</button>
+                <button class="btn secondary" id="importBtn" type="button" disabled>Import JSON</button>
+                <input id="importFile" type="file" accept="application/json" style="display:none" />
+              </div>
+
+              <div class="field" style="margin-top:14px;">
+                <label>Reset Demo Data</label>
+                <button class="btn danger" id="resetDemoBtn" type="button" style="width:100%;" disabled>Reset Everything</button>
+              </div>
+            </div>
+
+            <div>
+              <div class="subhead" style="margin-bottom:8px;">Edit Tournament Details</div>
+
+              <div class="grid2">
+                <div class="field">
+                  <label>Prize Pool (₹)</label>
+                  <input id="prizePoolInput" type="number" min="0" step="1" disabled />
+                </div>
+                <div class="field">
+                  <label>Entry Fee (₹)</label>
+                  <input id="entryFeeInput" type="number" min="0" step="1" disabled />
+                </div>
+              </div>
+
+              <div class="grid2">
+                <div class="field">
+                  <label>Date</label>
+                  <input id="dateInput" type="date" disabled />
+                </div>
+                <div class="field">
+                  <label>Time</label>
+                  <input id="timeInput" type="time" disabled />
+                </div>
+              </div>
+
+              <div class="field">
+                <label>Map</label>
+                <input id="mapInput" type="text" placeholder="e.g., Bermuda" disabled maxlength="40" />
+              </div>
+
+              <div class="field">
+                <label>Total Available Slots (Teams)</label>
+                <input id="slotsTotalInput" type="number" min="1" step="1" disabled />
+              </div>
+
+              <div class="field">
+                <label>Tournament Name</label>
+                <input id="tournamentNameInput" type="text" disabled maxlength="50" />
+              </div>
+
+              <div class="field">
+                <label>Tournament Subtitle / Rules</label>
+                <textarea id="tournamentSubtitleInput" disabled maxlength="200"></textarea>
+              </div>
+
+              <div class="row" style="margin-top:12px;">
+                <button class="btn" id="saveTournamentBtn" type="button" disabled>Save Details</button>
+              </div>
+              <div class="hint" style="margin-top:10px;">Registered teams and leaderboard can be updated below once admin is unlocked.</div>
+            </div>
+          </div>
+
+          <div class="split" style="margin-top:14px;">
+            <div>
+              <div class="subhead">Registered Teams</div>
+              <div class="hint">This demo derives live slots from registered teams count. You can mark teams as registered status (active/inactive) too.</div>
+
+              <table class="table" style="margin-top:12px;">
+                <thead>
+                  <tr>
+                    <th>Team</th>
+                    <th>Captain</th>
+                    <th>UIDs</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="adminTeamsTbody"></tbody>
+              </table>
+            </div>
+
+            <div>
+              <div class="subhead">Leaderboard Points</div>
+              <div class="hint">Update leaderboard points and keep it sorted.</div>
+
+              <table class="table" style="margin-top:12px;">
+                <thead>
+                  <tr>
+                    <th>Team</th>
+                    <th>Points</th>
+                    <th>Update</th>
+                  </tr>
+                </thead>
+                <tbody id="adminLeaderboardTbody"></tbody>
+              </table>
+
+              <div class="row" style="margin-top:12px;">
+                <button class="btn secondary" id="recalcPointsBtn" type="button" disabled>Sort & Recalc</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">© <span id="year"></span> BLACK•GOLD ESPORTS — Demo registration site (localStorage). Replace with backend/Firebase for real deployments.</div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ---------- Utilities ----------
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => document.querySelectorAll(sel);
+
+    function toast(msg){
+      const el = $('#toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(window.__toastT);
+      window.__toastT = setTimeout(()=>el.classList.remove('show'), 2600);
+    }
+
+    function safeParseJSON(s){
+      try{ return JSON.parse(s); }catch{ return null; }
+    }
+
+    // ---------- Demo Data Model ----------
+    const STORAGE_KEY = 'blackgold_ff_tournament_v1';
+    const DEFAULT_ADMIN_PIN = '1234';
+
+    const defaultData = {
+      meta: {
+        adminPin: DEFAULT_ADMIN_PIN,
+        whatsappReceiverNumber: '919999999999', // number to receive registration (captain/admin contact)
+        currency: '₹',
+      },
+      tournament: {
+        name: 'Free Fire BlackGold Cup',
+        subtitle: 'Format: Squad battle • Mode: Clash Squad • Map rotates • 4v4 • Respect rules',
+        prizePool: 50000,
+        entryFee: 500,
+        date: '2026-06-10',
+        time: '19:30',
+        map: 'Bermuda',
+        slotsTotal: 16,
+        registrationOpen: true,
+      },
+      registeredTeams: [
+        // {teamName, captainName, whatsappNumber, playerUids, statusActive, createdAt, points}
+      ],
+      leaderboard: [
+        // {teamName, captainName, points}
+      ]
+    };
+
+    function loadData(){
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const parsed = raw ? safeParseJSON(raw) : null;
+      return parsed ? parsed : structuredClone(defaultData);
+    }
+
+    function saveData(data){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    let state = loadData();
+    let adminUnlocked = false;
+
+    // ---------- Rendering ----------
+    function renderTournament(){
+      const t = state.tournament;
+      $('#tournamentName').textContent = t.name;
+      $('#tournamentSubtitle').textContent = t.subtitle;
+      $('#prizePool').textContent = `${t.currency ? t.currency : '₹'}${t.prizePool.toLocaleString()}`;
+      $('#entryFeeMini').textContent = `Entry fee ${t.currency ? t.currency : '₹'}${t.entryFee.toLocaleString()}`;
+      $('#entryFee').textContent = `${t.currency ? t.currency : '₹'}${t.entryFee.toLocaleString()}`;
+
+      const status = t.registrationOpen;
+      $('#regStatusText').textContent = status ? 'Registration Open' : 'Registration Closed';
+      $('#statusDot').classList.toggle('off', !status);
+      $('#localStatusDot').classList.toggle('off', !status);
+      $('#localStatusText').textContent = status ? 'Open' : 'Closed';
+
+      renderCountdown();
+      renderSlots();
+    }
+
+    function renderSlots(){
+      const total = Number(state.tournament.slotsTotal) || 0;
+      const activeTeams = (state.registeredTeams || []).filter(x=>x.statusActive).length;
+      $('#slotsLive').textContent = `${activeTeams} / ${total}`;
+      $('#slotsHint').textContent = activeTeams >= total ? 'Slots Full' : 'Teams registered';
+
+      // Enable/disable registration button based on status & slots
+      const canRegister = state.tournament.registrationOpen && activeTeams < total;
+      const btn = $('#whatsappSubmitBtn');
+      btn.disabled = !canRegister;
+      btn.style.opacity = btn.disabled ? '.55' : '1';
+    }
+
+    function renderCountdown(){
+      const {date, time} = state.tournament;
+      const countdownEl = $('#countdown');
+      const hintEl = $('#countdownHint');
+
+      function tick(){
+        const now = new Date();
+        const end = new Date(`${date}T${time}:00`);
+        const diff = end - now;
+        if(diff <= 0){
+          countdownEl.textContent = '00:00:00';
+          hintEl.textContent = 'Tournament started';
+          return;
+        }
+        const s = Math.floor(diff/1000);
+        const h = Math.floor(s/3600);
+        const m = Math.floor((s%3600)/60);
+        const sec = s%60;
+        countdownEl.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+        hintEl.textContent = 'Starts soon';
+      }
+
+      tick();
+      clearInterval(window.__countdownTimer);
+      window.__countdownTimer = setInterval(tick, 1000);
+    }
+
+    function normalizeUIDs(input){
+      return (input||'')
+        .split(',')
+        .map(x=>x.trim())
+        .filter(Boolean);
+    }
+
+    function buildWhatsAppMessage(){
+      const t = state.tournament;
+      const teamName = $('#teamName').value.trim();
+      const captainName = $('#captainName').value.trim();
+      const whatsappNumber = $('#whatsappNumber').value.trim();
+      const uids = normalizeUIDs($('#playerUids').value);
+
+      const uidList = uids.length ? uids.join(', ') : '--';
+      return [
+        `📌 Free Fire Tournament Registration`,
+        `Team Name: ${teamName || '--'}`,
+        `Captain Name: ${captainName || '--'}`,
+        `WhatsApp: ${whatsappNumber || '--'}`,
+        `Player UIDs: ${uidList}`,
+        `\nTournament: ${t.name}`,
+        `Map: ${t.map}`,
+        `Date & Time: ${t.date} • ${t.time}`,
+        `Prize Pool: ${t.prizePool.toLocaleString()} ${t.currency || '₹'}`,
+        `Entry Fee: ${t.entryFee.toLocaleString()} ${t.currency || '₹'}`,
+        `\nPlease confirm registration. Thank you!`
+      ].join('\n');
+    }
+
+    function updateMessagePreview(){
+      $('#messagePreview').value = buildWhatsAppMessage();
+    }
+
+    function validateForm(){
+      const t = state.tournament;
+      const total = Number(t.slotsTotal) || 0;
+      const activeTeams = (state.registeredTeams || []).filter(x=>x.statusActive).length;
+      if(!t.registrationOpen) return {ok:false, msg:'Registration is currently closed.'};
+      if(activeTeams >= total) return {ok:false, msg:'Slots are full.'};
+
+      const teamName = $('#teamName').value.trim();
+      const captainName = $('#captainName').value.trim();
+      const whatsappNumber = $('#whatsappNumber').value.trim();
+      const uids = normalizeUIDs($('#playerUids').value);
+
+      if(teamName.length < 2) return {ok:false, msg:'Enter a valid Team Name.'};
+      if(captainName.length < 2) return {ok:false, msg:'Enter a valid Captain Name.'};
+      if(!/^\d{8,18}$/.test(whatsappNumber)) return {ok:false, msg:'WhatsApp number should be digits only with country code.'};
+      if(uids.length < 4 || uids.length > 6) return {ok:false, msg:'Enter 4 to 6 Player UIDs separated by commas.'};
+
+      return {ok:true, msg:''};
+    }
+
+    function openWhatsApp(){
+      const v = validateForm();
+      updateMessagePreview();
+      if(!v.ok){ toast(v.msg); return; }
+
+      const receiver = state.meta.whatsappReceiverNumber || '';
+      const message = encodeURIComponent($('#messagePreview').value);
+
+      // WhatsApp deep link
+      const url = `https://wa.me/${receiver}?text=${message}`;
+      // Optimistic local registration (demo): add to registeredTeams
+      const already = (state.registeredTeams||[]).some(x=>x.teamName.toLowerCase() === $('#teamName').value.trim().toLowerCase() && x.statusActive);
+      if(!already){
+        const nowIso = new Date().toISOString();
+        state.registeredTeams.push({
+          teamName: $('#teamName').value.trim(),
+          captainName: $('#captainName').value.trim(),
+          whatsappNumber: $('#whatsappNumber').value.trim(),
+          playerUids: normalizeUIDs($('#playerUids').value).join(','),
+          statusActive: true,
+          createdAt: nowIso,
+          points: 0
+        });
+      }
+
+      // Sync leaderboard entry
+      syncLeaderboardFromTeams();
+      saveData(state);
+      renderTournament();
+      renderLeaderboard();
+      renderAdmin();
+
+      window.open(url, '_blank', 'noopener');
+      toast('Registration submitted via WhatsApp (demo saved locally).');
+    }
+
+    function syncLeaderboardFromTeams(){
+      const map = new Map();
+      for(const team of state.registeredTeams){
+        if(!team.statusActive) continue;
+        map.set(team.teamName, {teamName: team.teamName, captainName: team.captainName, points: Number(team.points)||0});
+      }
+      // Keep any existing leaderboard teams that are still active
+      state.leaderboard = Array.from(map.values());
+      // Ensure points are copied to registeredTeams if needed
+      for(const lt of state.leaderboard){
+        const rt = state.registeredTeams.find(x=>x.teamName===lt.teamName);
+        if(rt) rt.points = lt.points;
+      }
+      // Sort
+      state.leaderboard.sort((a,b)=> (b.points-a.points));
+    }
+
+    async function copyMessage(){
+      updateMessagePreview();
+      const text = $('#messagePreview').value;
+      try{
+        await navigator.clipboard.writeText(text);
+        toast('Registration text copied.');
+      }catch{
+        // fallback
+        $('#messagePreview').select();
+        document.execCommand('copy');
+        toast('Registration text copied.');
+      }
+    }
+
+    function renderLeaderboard(){
+      // Use state.leaderboard; if empty sync
+      if(!state.leaderboard || state.leaderboard.length === 0){
+        syncLeaderboardFromTeams();
+      }
+      const tbody = $('#leaderboardTbody');
+      const lb = (state.leaderboard||[]).slice().sort((a,b)=>b.points-a.points);
+      tbody.innerHTML = '';
+      if(lb.length===0){
+        tbody.innerHTML = `<tr><td colspan="4" style="color:var(--muted); font-weight:700;">No registered teams yet.</td></tr>`;
+        return;
+      }
+      const top = lb.slice(0,20);
+      top.forEach((row, idx)=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${idx+1}</td>
+          <td>${escapeHtml(row.teamName)}</td>
+          <td>${escapeHtml(row.captainName)}</td>
+          <td>${Number(row.points)||0}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','<')
+        .replaceAll('>','>')
+        .replaceAll('"','"')
+        .replaceAll("'",'&#039;');
+    }
+
+    // ---------- Admin ----------
+    function setAdminControlsEnabled(enabled){
+      const ids = [
+        'regOpenSelect','prizePoolInput','entryFeeInput','dateInput','timeInput','mapInput','slotsTotalInput','tournamentNameInput','tournamentSubtitleInput',
+        'saveTournamentBtn','exportBtn','importBtn','resetDemoBtn','recalcPointsBtn'
+      ];
+      ids.forEach(id=>{ const el = $('#'+id); if(el) el.disabled = !enabled; });
+      // Also set disabled on leaderboard inputs inside table (managed by renderAdmin)
+    }
+
+    function adminUnlock(){
+      const pin = ($('#adminPin').value||'').trim();
+      if(pin !== state.meta.adminPin){
+        toast('Invalid PIN.');
+        return;
+      }
+      adminUnlocked = true;
+      $('#adminLoginBtn').disabled = true;
+      $('#adminLogoutBtn').style.display = 'inline-flex';
+      setAdminControlsEnabled(true);
+      toast('Admin unlocked.');
+      renderAdmin();
+    }
+
+    function adminLock(){
+      adminUnlocked = false;
+      $('#adminLoginBtn').disabled = false;
+      $('#adminLogoutBtn').style.display = 'none';
+      setAdminControlsEnabled(false);
+      renderAdmin();
+      toast('Admin locked.');
+    }
+
+    function renderAdmin(){
+      const t = state.tournament;
+      // Ensure form reflects state
+      $('#regOpenSelect').value = t.registrationOpen ? 'open' : 'closed';
+      $('#prizePoolInput').value = t.prizePool;
+      $('#entryFeeInput').value = t.entryFee;
+      $('#dateInput').value = t.date;
+      $('#timeInput').value = t.time;
+      $('#mapInput').value = t.map;
+      $('#slotsTotalInput').value = t.slotsTotal;
+      $('#tournamentNameInput').value = t.name;
+      $('#tournamentSubtitleInput').value = t.subtitle;
+
+      const teamsTbody = $('#adminTeamsTbody');
+      teamsTbody.innerHTML = '';
+      const teams = (state.registeredTeams||[]).slice().sort((a,b)=> new Date(b.createdAt||0)-new Date(a.createdAt||0));
+
+      if(teams.length===0){
+        teamsTbody.innerHTML = `<tr><td colspan="4" style="color:var(--muted); font-weight:700;">No teams registered yet.</td></tr>`;
+      } else {
+        teams.forEach((team)=>{
+          const tr = document.createElement('tr');
+          const statusLabel = team.statusActive ? 'Active' : 'Inactive';
+          const statusColor = team.statusActive ? 'rgba(34,197,94,.18)' : 'rgba(255,255,255,.06)';
+          tr.innerHTML = `
+            <td>${escapeHtml(team.teamName)}</td>
+            <td>${escapeHtml(team.captainName)}</td>
+            <td class="mono">${escapeHtml(team.playerUids || '')}</td>
+            <td>
+              <select data-team-status="${escapeHtml(team.teamName)}" ${adminUnlocked ? '' : 'disabled'} style="width:100%; padding:10px 10px; border-radius:12px; border:1px solid rgba(212,175,55,.22); background: rgba(10,10,13,.55); color:var(--text);">
+                <option value="active" ${team.statusActive ? 'selected':''}>Active</option>
+                <option value="inactive" ${!team.statusActive ? 'selected':''}>Inactive</option>
+              </select>
+            </td>
+          `;
+          teamsTbody.appendChild(tr);
+
+          // Keep reference for later binding
+          const sel = tr.querySelector('select');
+          sel.addEventListener('change', ()=>{
+            const val = sel.value;
+            const found = state.registeredTeams.find(x=>x.teamName===team.teamName);
+            if(found){
+              found.statusActive = (val==='active');
+              // if inactive, leaderboard points set to 0 for demo
+              if(!found.statusActive) found.points = 0;
+              syncLeaderboardFromTeams();
+              saveData(state);
+              renderTournament();
+              renderLeaderboard();
+              renderAdmin();
+            }
+          });
+
+        });
+      }
+
+      // Admin leaderboard table
+      const lbTbody = $('#adminLeaderboardTbody');
+      lbTbody.innerHTML = '';
+      // Ensure leaderboard synced
+      syncLeaderboardFromTeams();
+
+      const lb = (state.leaderboard||[]).slice().sort((a,b)=>b.points-a.points);
+      if(lb.length===0){
+        lbTbody.innerHTML = `<tr><td colspan="3" style="color:var(--muted); font-weight:700;">No leaderboard entries.</td></tr>`;
+      } else {
+        lb.forEach((row)=>{
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${escapeHtml(row.teamName)}</td>
+            <td>
+              <input type="number" min="0" step="1" value="${Number(row.points)||0}" data-lb-team="${escapeHtml(row.teamName)}" ${adminUnlocked ? '' : 'disabled'} style="width:100%;" />
+            </td>
+            <td>
+              <button class="btn secondary" data-lb-save="${escapeHtml(row.teamName)}" type="button" ${adminUnlocked ? '' : 'disabled'}>Save</button>
+            </td>
+          `;
+          lbTbody.appendChild(tr);
+
+          const btn = tr.querySelector('button');
+          btn.addEventListener('click', ()=>{
+            const input = tr.querySelector('input');
+            const pts = Number(input.value)||0;
+            // Update registeredTeams and leaderboard
+            const rt = state.registeredTeams.find(x=>x.teamName===row.teamName);
+            if(rt) rt.points = pts;
+            const lbRow = state.leaderboard.find(x=>x.teamName===row.teamName);
+            if(lbRow) lbRow.points = pts;
+            syncLeaderboardFromTeams();
+            saveData(state);
+            renderLeaderboard();
+            renderAdmin();
+            toast('Leaderboard updated.');
+          });
+        });
+      }
+
+      $('#recalcPointsBtn').disabled = !adminUnlocked;
+      $('#saveTournamentBtn').disabled = !adminUnlocked;
+    }
+
+    // ---------- Tab Navigation ----------
+    function setActiveTab(name){
+      // Tabs
+      $$('.tab').forEach(el=>el.classList.toggle('active', el.dataset.tab===name));
+
+      // Sections
+      const register = $('#tab-register');
+      const leaderboard = $('#tab-leaderboard');
+      const admin = $('#tab-admin');
+
+      register.style.display = (name==='register') ? '' : 'none';
+      leaderboard.style.display = (name==='leaderboard') ? '' : 'none';
+      admin.classList.toggle('show', name==='admin');
+      admin.style.display = (name==='admin') ? '' : 'none';
+
+      if(name==='admin' && adminUnlocked){ renderAdmin(); }
+      if(name==='admin' && !adminUnlocked){
+        setAdminControlsEnabled(false);
+        $('#adminLoginBtn').disabled = false;
+        $('#adminLogoutBtn').style.display = 'none';
+      }
+    }
+
+    // ---------- Event Binding ----------
+    function bind(){
+      // Update message preview live
+      ['#teamName','#captainName','#whatsappNumber','#playerUids'].forEach(id=>{
+        $(id).addEventListener('input', updateMessagePreview);
+      });
+
+      $('#whatsappSubmitBtn').addEventListener('click', openWhatsApp);
+      $('#copyMessageBtn').addEventListener('click', copyMessage);
+
+      $('#adminLoginBtn').addEventListener('click', adminUnlock);
+      $('#adminLogoutBtn').addEventListener('click', adminLock);
+
+      $$('.tab').forEach(tab=>{
+        tab.addEventListener('click', ()=>setActiveTab(tab.dataset.tab));
+      });
+
+      $('#saveTournamentBtn').addEventListener('click', ()=>{
+        const t = state.tournament;
+        const openVal = $('#regOpenSelect').value;
+        t.registrationOpen = openVal === 'open';
+        t.prizePool = Number($('#prizePoolInput').value)||0;
+        t.entryFee = Number($('#entryFeeInput').value)||0;
+        t.date = $('#dateInput').value;
+        t.time = $('#timeInput').value;
+        t.map = $('#mapInput').value.trim() || '';
+        t.slotsTotal = Math.max(1, Number($('#slotsTotalInput').value)||1);
+        t.name = $('#tournamentNameInput').value.trim() || 'Tournament';
+        t.subtitle = $('#tournamentSubtitleInput').value.trim() || '';
+
+        saveData(state);
+        renderTournament();
+        renderLeaderboard();
+        renderAdmin();
+        toast('Tournament details saved.');
+      });
+
+      $('#recalcPointsBtn').addEventListener('click', ()=>{
+        // Points already stored; just sort.
+        syncLeaderboardFromTeams();
+        saveData(state);
+        renderLeaderboard();
+        renderAdmin();
+        toast('Leaderboard sorted.');
+      });
+
+      $('#exportBtn').addEventListener('click', async ()=>{
+        const dataStr = JSON.stringify(state, null, 2);
+        try{
+          await navigator.clipboard.writeText(dataStr);
+          toast('Export JSON copied to clipboard.');
+        }catch{
+          toast('Copy failed.');
+        }
+      });
+
+      $('#importBtn').addEventListener('click', ()=>{
+        $('#importFile').click();
+      });
+
+      $('#importFile').addEventListener('change', async ()=>{
+        const file = $('#importFile').files && $('#importFile').files[0];
+        if(!file) return;
+        const text = await file.text();
+        const parsed = safeParseJSON(text);
+        if(!parsed){ toast('Invalid JSON file.'); return; }
+        state = parsed;
+        saveData(state);
+        renderTournament();
+        renderLeaderboard();
+        renderAdmin();
+        toast('Import successful.');
+      });
+
+      $('#resetDemoBtn').addEventListener('click', ()=>{
+        state = structuredClone(defaultData);
+        saveData(state);
+        adminUnlocked = false;
+        $('#adminLoginBtn').disabled = false;
+        $('#adminLogoutBtn').style.display = 'none';
+        setAdminControlsEnabled(false);
+        renderTournament();
+        renderLeaderboard();
+        renderAdmin();
+        toast('Demo reset done.');
+      });
+    }
+
+    // ---------- Init ----------
+    function init(){
+      // Set default currency display if missing
+      if(!state.tournament.currency) state.tournament.currency = state.meta.currency || '₹';
+
+      // Ensure registration open derived
+      $('#year').textContent = String(new Date().getFullYear());
+
+      // First load
+      $('#leaderboardMetaText').textContent = 'Top teams • Live points';
+
+      // Default tab
+      setActiveTab('register');
+
+      // Set admin controls disabled
+      setAdminControlsEnabled(false);
+
+      renderTournament();
+      renderLeaderboard();
+      renderAdmin();
+      updateMessagePreview();
+
+      bind();
+
+      // Countdown / slots already set in renderTournament
+      toast('Loaded tournament data.');
+    }
+
+    init();
+  </script>
+</body>
+</html>
+
